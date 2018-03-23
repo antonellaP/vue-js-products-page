@@ -1,0 +1,19 @@
+{
+  "name": "vue-js-products-page",
+  "version": "1.0.0",
+  "description": "Simple products page with shopping cart (front-end only, no payment integration) with Vue.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antonellaP/vue-js-products-page.git"
+  },
+  "author": "Maria Antonietta Perna",
+  "license": "MIT",
+  "homepage": "https://github.com/antonellaP/vue-js-products-page#readme",
+  "devDependencies": {
+    "node-sass": "^4.7.2"
+  }
+}
