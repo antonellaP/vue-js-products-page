@@ -5,9 +5,103 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>The Vue Bookshop</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+  <div id="app">
+  <header>
+    <div class="container alignment-container">
+      <div class="logo">
+        <h1 class="logo__title"><a class="logo__title-link" href="#" @click.prevent="goToHomePage">Vue's <br> Bookshop</a></h1>
+      </div>
+      <div class="cart-header-info">
+        <span class="cart-header-info__text">Your cart has {{ cartItems.length }} items</span>
+        <a href="#" type="button" class="cart-header-info__link" @click.prevent="displayCartView">View cart</a>
+      </div>
+    </div>
+    <!-- container -->
+    <div class="hero">
+      <div class="container">
+        <h2 class="display-title">
+          Make learning your greatest pleasure!
+        </h2>
+        <button class="hero__btn">Start now!</button>
+      </div>
+    </div>
+  </header>
+  <main>
+    <h2 class="page-title">{{ pageTitle }}</h2>
+    <div v-if="!isCartView" class="container products-container">
+      <div class="prod-card" v-for="product in products">
+        <img :src="product.imgSrc" alt="" class="prod-card__image">
+        <div class="prod-card__info">
+          <h4 class="prod-card__title">{{ product.name }}</h4>
+          <p class="prod-card__description">{{ product.description }}</p>
+          <div class="alignment-container">
+            <p class="prod-card__price">${{ product.price }}</p>
+            <p :class="{'not-in-stock': product.inStock === 0}" class="prod-card__in-stock">In stock: {{ product.inStock }}</p>
+          </div>
+          <!--/.alignment-container -->
+
+        </div>
+        <!--/card__info-->
+        <button :disabled="product.inStock === 0 ? true : false" class="prod-card__btn" id="add-to-cart" type="button" @click.prevent="addProdToCart(product)">Add to Cart</button>
+      </div>
+      <!--/card-->
+
+    </div>
+
+    <div v-else class="container">
+      <!-- cart view -->
+      <table v-if="cartItems.length > 0" class="cart">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="prod in cartItems">
+            <td>{{ prod.item.name }}</td>
+            <td><span class="cart__qty-text">{{ prod.quantity }}</span> <button class="cart__add-qty" @click="increaseQuantity(prod)" :disabled="prod.item.inStock === 0">+</button> <button class="cart__remove-qty" @click="decreaseQuantity(prod)" :disabled="prod.quantity === 0">-</button></td>
+            <td>${{ prod.item.price }}</td>
+          </tr>
+          <tr class="cart__total">
+            <td colspan="2">Total:</td>
+            <td>${{ calculateTotal }}</td>
+          </tr>
+          <tr>
+            <td colspan="2"></td>
+            <td><button class="cart__checkout-btn" @click="checkout">Checkout</button></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div v-else class="empty-cart">
+        <h3 class="empty-cart__message">Your cart is empty.</h3>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <div class="container alignment-container">
+      <ul class="footer-links">
+        <li class="footer-links__list-item">
+          <a href="#" class="footer-links__link">About</a>
+        </li>
+        <li class="footer-links__list-item">
+          <a href="#" class="footer-links__link">Contact</a>
+        </li>
+        <li class="footer-links__list-item">
+          <a href="#" class="footer-links__link">Legal</a>
+        </li>
+      </ul>
+
+      <p class="footer-credits">&copy;2018 Maria Antonietta Perna</p>
+    </div>
+  </footer>
+</div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.min.js"></script>
   <script src="js/app.js"></script>
